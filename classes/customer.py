@@ -21,14 +21,26 @@ class Customer():
         if self.cart[voucherAmount]>0:
             self.cart[voucherAmount]-=1
                 
-    def purchase(self):
+    def purchase(self, vendorUsername):
         # assume payment made successfully
         successful = True
         if successful:
             for amount in self.cart:
                 while self.cart[amount]>0:
-                    self.Vouchers.append(Voucher(self.username, amount))
+                    voucher = Voucher(self.username, amount, vendorUsername)
+                    self.Vouchers.append(voucher)
                     self.cart[amount]-=1
+                    db.execute("insert into users values (userID, userPW, voucher) values (?, ?, ?)",
+                              (self.username, self.password, voucher.voucherID))
+                    points_earned = amount * 0.1 #this will depend on the calculation we choose to adopt
+                    db.execute("insert into loyalty values (userID, loyaltyPoints) values (?, ?)",
+                              (self.username, points_earned))
+                    db.execute("insert into vendor values (userID, userPW, voucherspurchased) values (?, ?, ?)",
+                              (voucher.vendor_username, "", voucher.voucherID)
+                    db.execute("insert into overview values (userID, userPW, vouchersID, voucherstatus, vendorUsername) values (?, ?, ?)",
+                              ("", "", voucher.voucherID, "Purchased", voucher.vendor_username))          
+                     
+                    
     # call updateDatabase(Customer) right after    
     
     
