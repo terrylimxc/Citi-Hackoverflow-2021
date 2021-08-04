@@ -8,8 +8,13 @@ def retrieveCustomer(username, password):
         loginDataQuery = '''SELECT loyaltyPoint FROM loyalty WHERE userID=? AND userPW=?'''
         records = db.execute(userDataQuery, (username, password))
         loyaltyPoint = db.execute(loginDataQuery, (username, password))
-        voucherIDs = [record[2] for record in records]
-        return Customer(username, password, voucherIDs, loyaltyPoint[0])
+        voucherList = []
+	for record in records:
+		voucherID = record[2]
+		voucher = Voucher(username, record[3], record[4])
+		voucher.voucherID = voucherID
+		voucherList.append(voucher)
+        return Customer(username, password, voucherList, loyaltyPoint[0])
 	
 
 def retrieveVendor(username, password):
