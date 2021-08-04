@@ -62,10 +62,12 @@ class Customer():
     # for now it will just show the qr code since when the vendor scans the qr code, the updates to database are done over there
     def redeem(self, voucher):
         # assume it gives us a voucher class instance
+        self.Vouchers.remove(voucher)
         return voucher.generate_qr()
     def redeem_2(self, amount, vendor_username, voucherID):
         voucher = Voucher(self.username, amount, vendor_username)
         voucher.voucherID = voucherID
+        self.Vouchers.remove(voucher)
         return voucher.generate_qr()
     
     def get_username(self):
