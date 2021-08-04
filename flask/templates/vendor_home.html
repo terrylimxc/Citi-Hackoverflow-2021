@@ -1,0 +1,40 @@
+{% extends "post_login_base.html" %}
+
+{% block content %}
+
+<div class="navbar" style="padding-bottom: 40px;">
+    <a class="active" href="{{ url_for('main.seller_home') }}"><i class="fas fa-home"></i>&nbsp; Home</a> 
+    <a href="{{ url_for('main.sell') }}"><i class="fas fa-store"></i>&nbsp; Sell Vouchers</a> 
+    <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp; Logout</a>
+</div>
+
+<h3 id="welcome_name"><center>Welcome, {{ name }}!</center></h3>
+&nbsp;
+<table class="table table-hover" style="text-align: center;">
+    <thead>
+        <tr>
+          <th scope="col">Denomination</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        {% for row in all_vouchers %}
+        <tr class="table-primary">
+            <td>${{ row.denomination }}</td>
+            <td>${{ row.price }}</td>
+            <td>{{ row.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type=text/javascript src="{{url_for('static', filename='jquery.fittext.js') }}"></script>
+<script type="text/javascript">
+    $("#welcome_name").fitText(1.4);
+</script>
+{% endblock %}

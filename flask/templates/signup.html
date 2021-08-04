@@ -4,14 +4,60 @@
 {% with messages = get_flashed_messages() %}
 {% if messages %}
     <div class="notification is-danger">
-        {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+        {{ messages[0] }}</a>.
     </div>
 {% endif %}
 {% endwith %}
-<form method="POST" action="/signup">
 
+<script type="text/javascript">
+    function dynInput(cbox) {
+     if (cbox.checked) {
+        // Dropdown for Companies
+        var input = document.createElement("select");
+        input.className = "select is-medium";
+        input.placeholder = "Company";
+        input.style.cssText = "margin-bottom:0.75rem;";
+        input.name = "company";
+
+        var option1 = document.createElement("option");
+        option1.value = "CapitaLand";
+        option1.label = "CapitaLand";
+
+        var option2 = document.createElement("option");
+        option2.value = "Far East Organisation";
+        option2.label = "Far East Organisation";
+
+        var option3 = document.createElement("option");
+        option3.value = "Frasers Property";
+        option3.label = "Frasers Property";
+
+        var option4 = document.createElement("option");
+        option4.value = "Mapletree";
+        option4.label = "Mapletree";
+
+        input.appendChild(option1);
+        input.appendChild(option2);
+        input.appendChild(option3);
+        input.appendChild(option4);
+        document.getElementById("insertinputs").appendChild(input);
+
+        // Input field for Secret Code
+        var input = document.createElement("input");
+        input.className = "input is-medium";
+        input.placeholder = "Secret Code";
+        input.style.cssText = "margin-bottom:0.75rem;";
+        input.type = "text";
+        input.autofocus = "";
+        input.name = "code";
+        document.getElementById("insertinputs").appendChild(input);
+
+    }
+    else {document.getElementById("insertinputs").remove();}
+    }
+</script>
+   
 <div class="column is-4 is-offset-4">
-    <h3 class="title">App Name to be decided</h3>
+    <h3 class="title">CitiWallet</h3>
     <div class="box">
         <form method="POST" action="/signup">
             <div class="field">
@@ -34,8 +80,15 @@
 
             <div class="field">
                 <div class="control">
-                    <input type="checkbox" name="identity" id="identity" value="Vendor">
-                    <label for="identity"> &nbsp I am a vendor </label>
+                    <input type="checkbox" name="is_vendor" id="is_vendor" value="Vendor" onclick="dynInput(this);">
+                    <label for="identity"> &nbsp I am a vendor &nbsp &nbsp &nbsp &nbsp</label>
+                    <input type="checkbox" name="is_cashier" id="is_cashier" value="Cashier">
+                    <label for="identity"> &nbsp I am a cashier </label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control" id="insertinputs">
                 </div>
             </div>
 
