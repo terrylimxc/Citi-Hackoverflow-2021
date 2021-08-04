@@ -24,3 +24,25 @@ class Vendor():
         else:
             return "Not a valid voucher"        
         # should update customer database/ remove the voucher
+     
+    def postVoucher(self, denomination):
+        x = db.execute("")
+        y = x.rowcount() > 0
+        #need to check if the denomination + vendor name is already in the database
+        if not y:
+            db.execute("insert into vouchers values (vendorname, denomination) values (?, ?)",
+                      (self.username, denomination))
+            return "Voucher successfully added!"
+        else:
+            return "Voucher is already on sale!"
+        
+    def removeVoucher(self, denomination):
+        x = db.execute("")
+        y = x.rowcount()>0
+        #need to check if the denomination + vendor name is in the database
+        if y:
+            db.execute("delete from vouchers where vendorname = ? and denomination = ?", (self.username, denomination))
+            return "Voucher successfully removed!"
+        else:
+            return "Voucher is not currently on sale!"
+                       
