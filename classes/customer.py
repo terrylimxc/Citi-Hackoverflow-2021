@@ -36,8 +36,8 @@ class Customer():
                     new_points = points_earned + db.execute("SELECT loyaltyPoints WHERE userID=?",
                                                            (self.username))
                     db.execute("UPDATE loyalty SET loyaltyPoints = ? WHERE userID=?", (new_points, self.username))
-                    db.execute("insert into vendors values (vendorID, vendorPW, voucherID, voucherStatus) values (?, ?, ?)",
-                              (voucher.vendor_username, "", voucher.voucherID, "Purchased")
+                    db.execute("insert into vendors values (vendorID, vendorPW, voucherID, voucherStatus, voucherAmount) values (?, ?, ?, ?, ?)",
+                              (voucher.vendor_username, "", voucher.voucherID, "Purchased", voucher.amount)
                     db.commit()
         
                      
