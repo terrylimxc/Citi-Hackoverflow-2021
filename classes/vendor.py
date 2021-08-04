@@ -17,9 +17,8 @@ class Vendor():
     def useVoucher(self,customerUsername,voucherID,vendorUsername):
         if voucherID in self.voucherspurchased:
             self.voucherspurchased.remove(voucherID)
-            db.execute('''DELETE FROM users WHERE userID=? AND voucher=?''', (customerUsername, voucherID))
-            db.execute('''DELETE FROM vendor WHERE userID=? AND voucher=?''', (vendorUsername, voucherID))
-            db.execute('''UPDATE overview SET voucherstatus = "Redeemed" WHERE vouchersID=?''', (voucherID,))
+            db.execute('''DELETE FROM users WHERE userID=? AND voucherID=?''', (customerUsername, voucherID))
+            db.execute('''UPDATE vendors SET voucherStatus = "Redeemed" where vendorID=? AND voucherID=?''', (vendorUsername, voucherID))
             db.commit()
             return "Voucher successfully redeemed!"
         else:
