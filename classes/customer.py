@@ -10,16 +10,29 @@ class Customer():
         self.password = password
         self.Vouchers = Vouchers
         self.loyaltyPoints = loyaltyPoints
-        self.cart = {10: 0,                    # these are the only voucher options
-                     20: 0,
-                     50: 0,
-                     100: 0} 
+        #self.cart = {10: 0,                    # these are the only voucher options
+        #             20: 0,
+        #             50: 0,
+        #             100: 0}
+        self.cart = {}
         
-    def add_voucher(self, voucherAmount):
-        self.cart[voucherAmount]+=1
-    def drop_voucher(self, voucherAmount):
-        if self.cart[voucherAmount]>0:
-            self.cart[voucherAmount]-=1
+    #def add_voucher(self, voucherAmount):
+    #    self.cart[voucherAmount]+=1
+    #def drop_voucher(self, voucherAmount):
+    #    if self.cart[voucherAmount]>0:
+    #        self.cart[voucherAmount]-=1
+    def add_voucher(self, vendorName, denomination):
+        x = (vendorName, denomination)
+        if x not in self.cart.keys():
+            self.cart[x] = 1
+        else:
+            self.cart[x] += 1
+    def drop_voucher(self, vendorName, denomination):
+        x = (vendorName, denomination)
+        if self.cart[x] > 1:
+            self.cart[x] -= 1
+        else:
+            del self.cart[x]
                 
     def purchase(self, vendorUsername):
         # assume payment made successfully
@@ -27,7 +40,7 @@ class Customer():
         if successful:
             for amount in self.cart:
                 while self.cart[amount]>0:
-                    voucher = Voucher(self.username, amount, vendorUsername)
+                    voucher = Voucher(self.username, amount[1], amount[0])
                     self.Vouchers.append(voucher)
                     self.cart[amount]-=1
                     db.execute("insert into users values (userID, userPW, voucherID, voucherAmount, vendorID) values (?, ?, ?, ?, ?)",
