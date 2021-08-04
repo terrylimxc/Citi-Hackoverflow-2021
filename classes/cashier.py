@@ -1,5 +1,5 @@
 import cv2 as cv
-class Vendor():
+class Cashier():
     def __init__(self,username,password,voucherIDs):
         self.username = username
         self.password = password
@@ -43,30 +43,4 @@ class Vendor():
         else:
             return "Not a valid voucher"             
         
-    
-    # for offering a particular denomination of a voucher on the store
-    def postVoucher(self, denomination):
-        # change x and y to something more interpretable?
-        sqlQuery = '''SELECT * FROM vouchers WHERE vendorID = ? AND denomination =?'''
-        # need to check if self.username is correct 
-        x = db.execute(sqlQuery, (self.username, denomination))
-        y = x.rowcount() > 0
-        #need to check if the denomination + vendor name is already in the database
-        if not y:
-            db.execute("insert into vouchers values (vendorID, denomination) values (?, ?)",
-                      (self.username, denomination))
-            return "Voucher successfully added!"
-        else:
-            return "Voucher is already on sale!"
-    # for removing a particular denomination of a voucher from the store    
-    def removeVoucher(self, denomination):
-        sqlQuery = '''SELECT * FROM vouchers WHERE vendorID = ? AND denomination = ?'''
-        x = db.execute(sqlQuery, (self.username, denomination)
-        y = x.rowcount()>0
-        #need to check if the denomination + vendor name is in the database
-        if y:
-            db.execute("delete from vouchers where vendorID = ? and denomination = ?", (self.username, denomination))
-            return "Voucher successfully removed!"
-        else:
-            return "Voucher is not currently on sale!"
                        
