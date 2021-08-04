@@ -33,7 +33,57 @@ def buyer_home():
 @main.route('/buyer/buy')
 @login_required
 def buy():
-    return render_template('customer_buy.html')
+    all_vouchers = Voucher.query.order_by(Voucher.company, Voucher.denomination, Voucher.price).all()
+    all_companies = [company.company for company in Voucher.query.with_entities(Voucher.company).distinct()]
+    all_companies.insert(0, "All")
+
+    return render_template('customer_buy.html', all_vouchers=all_vouchers, all_companies=all_companies)
+
+@main.route('/buyer/buy', methods=['POST'])
+@login_required
+def buy_post():
+    selected_company = request.form.get('filter_company')
+    selected_company = " ".join(selected_company.split("+"))
+    if selected_company != "All":
+        all_vouchers = Voucher.query.filter_by(company=selected_company).order_by(Voucher.denomination, Voucher.price).all()
+        temp = [company.company for company in Voucher.query.with_entities(Voucher.company).distinct()]
+        temp.remove(selected_company)
+
+        all_companies = [selected_company, "All"]
+        all_companies.extend(temp)
+
+    else:
+        all_vouchers = Voucher.query.order_by(Voucher.company, Voucher.denomination, Voucher.price).all()
+        all_companies = [company.company for company in Voucher.query.with_entities(Voucher.company).distinct()]
+        all_companies.insert(0, "All")
+
+    return render_template('customer_buy.html', all_vouchers=all_vouchers, all_companies=all_companies)
+
+@main.route('/buyer/add', methods=['POST'])
+@login_required
+def add_post():
+    selected_company = request.form.get('filter_company')
+    selected_company = " ".join(selected_company.split("+"))
+    if selected_company != "All":
+        all_vouchers = Voucher.query.filter_by(company=selected_company).order_by(Voucher.denomination, Voucher.price).all()
+        temp = [company.company for company in Voucher.query.with_entities(Voucher.company).distinct()]
+        temp.remove(selected_company)
+
+        all_companies = [selected_company, "All"]
+        all_companies.extend(temp)
+
+    else:
+        all_vouchers = Voucher.query.order_by(Voucher.company, Voucher.denomination, Voucher.price).all()
+        all_companies = [company.company for company in Voucher.query.with_entities(Voucher.company).distinct()]
+        all_companies.insert(0, "All")
+
+    return render_template('customer_buy.html', all_vouchers=all_vouchers, all_companies=all_companies)
+
+@app.route('/background_process_test')
+@login_required
+def background_process_test():
+    print ("Hello")
+    return ("nothing")
 
 @main.route('/buyer/wallet')
 @login_required
