@@ -25,7 +25,8 @@ class Vendor():
         else:
             return "Not a valid voucher"        
         # should update customer database/ remove the voucher
-     
+    
+    # for offering a particular denomination of a voucher on the store
     def postVoucher(self, denomination):
         # change x and y to something more interpretable?
         sqlQuery = '''SELECT * FROM vouchers WHERE vendorname = ? AND denomination =?'''
@@ -39,7 +40,7 @@ class Vendor():
             return "Voucher successfully added!"
         else:
             return "Voucher is already on sale!"
-        
+    # for removing a particular denomination of a voucher from the store    
     def removeVoucher(self, denomination):
         sqlQuery = '''SELECT * FROM vouchers WHERE vendorname = ? AND denomination = ?'''
         x = db.execute(sqlQuery, (self.username, denomination)
