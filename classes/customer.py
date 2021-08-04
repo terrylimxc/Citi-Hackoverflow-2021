@@ -30,15 +30,16 @@ class Customer():
                     voucher = Voucher(self.username, amount, vendorUsername)
                     self.Vouchers.append(voucher)
                     self.cart[amount]-=1
-                    db.execute("insert into users values (userID, userPW, voucher) values (?, ?, ?)",
+                    db.execute("insert into users values (userID, userPW, voucherID) values (?, ?, ?)",
                               (self.username, self.password, voucher.voucherID))
                     points_earned = amount * 0.1 #this will depend on the calculation we choose to adopt
-                    db.execute("insert into loyalty values (userID, loyaltyPoints) values (?, ?)",
-                              (self.username, points_earned))
-                    db.execute("insert into vendor values (userID, userPW, voucherspurchased) values (?, ?, ?)",
-                              (voucher.vendor_username, "", voucher.voucherID)
-                    db.execute("insert into overview values (userID, userPW, vouchersID, voucherstatus, vendorUsername) values (?, ?, ?)",
-                              ("", "", voucher.voucherID, "Purchased", voucher.vendor_username))          
+                    new_points = points_earned + db.execute("SELECT loyaltyPoints WHERE userID=?",
+                                                           (self.username))
+                    db.execute("UPDATE loyalty SET loyaltyPoints = ? WHERE userID=?", (new_points, self.username))
+                    db.execute("insert into vendors values (vendorID, vendorPW, voucherID, voucherStatus) values (?, ?, ?)",
+                              (voucher.vendor_username, "", voucher.voucherID, "Purchased")
+                    db.commit()
+        
                      
                     
     # call updateDatabase(Customer) right after    
