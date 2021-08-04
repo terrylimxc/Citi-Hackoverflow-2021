@@ -50,8 +50,10 @@ class Customer():
     def redeem(self, voucher):
         # assume it gives us a voucher class instance
         return voucher.generate_qr()
-    def redeem_2(self, amount, vendor_username):
-        return Voucher(self.username, amount, vendor_username).generate_qr()
+    def redeem_2(self, amount, vendor_username, voucherID):
+        voucher = Voucher(self.username, amount, vendor_username)
+        voucher.voucherID = voucherID
+        return voucher.generate_qr()
     
     def get_username(self):
         return self.username
