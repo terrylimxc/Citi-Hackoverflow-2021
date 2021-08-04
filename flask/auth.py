@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
@@ -45,10 +45,24 @@ def signup_post():
     email = request.form.get('email')
     name = request.form.get('name')
     password = request.form.get('password')
-    identity = request.form.get('identity')
+    is_vendor = request.form.get('is_vendor')
+    is_cashier = request.form.get('is_cashier')
 
-    if not identity:
-        identity = "Customer" # Convert empty string to Customer
+    MASTER = {"CapitaLand" : "GRWzj1RD3lvtDsTJ", 
+    "Far East Organisation": "0sTApeqt4oTm9ojv", 
+    "Frasers Property": "NkriYNQ7JamPNRw7", 
+    "Mapletree": "5LbjNfJzr3fKqPJS"}
+
+    if (not is_vendor) and (not is_cashier):
+        identity = "customer" # Convert empty string to Customer
+        company = ""
+    elif is_cashier:
+        identity = "cashier"
+        company = ""
+    else:
+        identity = "vendor"
+        company = request.form.get('company')
+        code = request.form.get('code')
 
     user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
 
@@ -56,8 +70,13 @@ def signup_post():
         flash('Email address already exists') # if a user is found, we want to redirect back to signup page so user can try again
         return redirect(url_for('auth.signup'))
 
+    if identity == "vendor":
+        if MASTER[company] != code:
+            flash('Invalid Secret Code') # If the user enters the wrong Secret Code for vendor account, redirect back to signup page to try again
+            return redirect(url_for('auth.signup'))
+
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), identity=identity)
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'), identity=identity, company = company)
 
     # add the new user to the database
     db.session.add(new_user)
