@@ -5,7 +5,7 @@ from classes.voucher import Voucher
 def retrieveCustomer(username, password):
 	# Search customer database and return customer class
 	userDataQuery = '''SELECT * FROM users WHERE userID=? AND userPW=?'''
-        loginDataQuery = '''SELECT loyalty FROM loyalty WHERE userID=? AND userPW=?'''
+        loginDataQuery = '''SELECT loyaltyPoint FROM loyalty WHERE userID=? AND userPW=?'''
         records = db.execute(userDataQuery, (username, password))
         loyaltyPoint = db.execute(loginDataQuery, (username, password))
         voucherIDs = [record[2] for record in records]
