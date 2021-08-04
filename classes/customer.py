@@ -34,7 +34,7 @@ class Customer():
         else:
             del self.cart[x]
                 
-    def purchase(self, vendorUsername):
+    def purchase(self):
         # assume payment made successfully
         successful = True
         if successful:
