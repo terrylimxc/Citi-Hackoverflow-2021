@@ -9,15 +9,15 @@ def retrieveCustomer(username, password):
         records = db.execute(userDataQuery, (username, password))
         loyaltyPoint = db.execute(loginDataQuery, (username, password))
         voucherIDs = [record[2] for record in records]
-        return Customer(username, password, voucherIDs, loyaltyPoint)
+        return Customer(username, password, voucherIDs, loyaltyPoint[0])
 	
 
 def retrieveVendor(username, password):
 	# Search vendor database and return vendor class
-	dataQuery = '''SELECT * FROM vendors WHERE userID=? AND userPW=?'''
+	dataQuery = '''SELECT * FROM vendors WHERE vendorID=? AND vendorPW=?'''
         records = db.execute(dataQuery, (username, password))
-        voucherspurchased = [record[2] for record in records]
-        return Vendor(username, password, voucherspurchased)
+        voucherIDs = [record[2] for record in records]
+        return Vendor(username, password, voucherIDs)
         
 # takes the Customer and updates customer database
 def updateCustomer(Customer):        
