@@ -24,7 +24,7 @@
         {% for row in all_vouchers %}
         <tr class="table-primary">
             <td>${{ row.denomination }}</td>
-            <td>${{ row.price }}</td>
+            <td>${{'%0.2f'|format(row.price|float)}}</td>
             <td>{{ row.quantity }}</td>
         </tr>
         {% endfor %}
