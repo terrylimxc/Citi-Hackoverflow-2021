@@ -14,7 +14,7 @@ def retrieveCustomer(username, password):
 
 def retrieveVendor(username, password):
 	# Search vendor database and return vendor class
-	dataQuery = '''SELECT * FROM vendor WHERE userID=? AND userPW=?'''
+	dataQuery = '''SELECT * FROM vendors WHERE userID=? AND userPW=?'''
         records = db.execute(dataQuery, (username, password))
         voucherspurchased = [record[2] for record in records]
         return Vendor(username, password, voucherspurchased)
