@@ -1,0 +1,51 @@
+{% extends "customer_base.html" %}
+
+{% block content %}
+<div class="navbar" style="padding-bottom: 40px;">
+    <a href="{{ url_for('main.home') }}"><i class="fas fa-home"></i>&nbsp; Home</a> 
+    <a href="{{ url_for('main.buy') }}"><i class="fas fa-shopping-cart"></i>&nbsp; Buy Vouchers</a> 
+    <a class="active" href="#"><i class="fas fa-wallet"></i>&nbsp; My Vouchers</a> 
+    <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp; Logout</a>
+</div>
+
+
+
+<div class="d-grid gap-2">
+    <button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#MyModal">$10 CapitalLand Voucher<br><small>Expiry:31/09/21</small></button>
+    <button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#MyModal">$20 CapitalLand Voucher<br><small>Expiry:31/11/21</small></button>
+    
+    <!-- Modal -->
+    <div id="MyModal" class="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">$10 CapitalLand Voucher</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <p>Some text in the modal..</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Use</button>
+              &nbsp;
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>    
+</div>
+
+
+
+
+  
+  
+
+
+  
+  
+
+
+{% endblock %}

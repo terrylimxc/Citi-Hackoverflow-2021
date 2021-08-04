@@ -1,0 +1,12 @@
+{% extends "customer_base.html" %}
+
+{% block content %}
+<div class="navbar" style="padding-bottom: 40px;">
+    <a href="{{ url_for('main.home') }}"><i class="fas fa-home"></i>&nbsp; Home</a> 
+    <a class="active" href="#"><i class="fas fa-shopping-cart"></i>&nbsp; Buy Vouchers</a> 
+    <a href="{{ url_for('main.wallet') }}"><i class="fas fa-wallet"></i>&nbsp; My Vouchers</a> 
+    <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp; Logout</a>
+</div>
+
+
+{% endblock %}

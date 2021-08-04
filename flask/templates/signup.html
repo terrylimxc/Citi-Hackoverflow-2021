@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+    </div>
+{% endif %}
+{% endwith %}
+<form method="POST" action="/signup">
+
+<div class="column is-4 is-offset-4">
+    <h3 class="title">App Name to be decided</h3>
+    <div class="box">
+        <form method="POST" action="/signup">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" type="email" name="email" placeholder="Email" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" type="text" name="name" placeholder="Username" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-medium" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input type="checkbox" name="identity" id="identity" value="Vendor">
+                    <label for="identity"> &nbsp I am a vendor </label>
+                </div>
+            </div>
+
+            <div class="buttons is-centered" style="padding-bottom: 0%;">
+                <button class="button is-block is-info is-large">Sign Up</button>
+            </div> 
+            Already have an account? <a href="/login" style="color:rgb(11, 237, 245)"><u>Sign in</u></a>
+    
+
+        </form>
+    </div>
+</div>
+{% endblock %}
