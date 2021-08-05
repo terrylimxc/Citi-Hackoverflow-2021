@@ -1,0 +1,37 @@
+{% extends "post_login_base.html" %}
+
+{% block content %}
+<style>
+    .navbar a {
+        float: left;
+        padding: 12px;
+        color: white;
+        text-decoration: none;
+        font-size: 17px;
+        width: 50%; /* Two links of equal widths */
+        text-align: center;
+    }
+
+</style>
+
+<div class="navbar" style="padding-bottom: 40px;">
+    <a class="active" href="{{ url_for('main.cashier_home') }}"><i class="fas fa-home"></i>&nbsp; Home</a> 
+    <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp; Logout</a>
+</div>
+
+<h3 id="welcome_name"><center>Welcome, {{ name }}!</center></h3>
+&nbsp;
+
+<div>
+    <svg width="400" height="400" transform="translate(31,30)">
+        <rect width="300" height="300" style="fill:rgb(179, 179, 212);stroke-width:3;stroke:rgb(0,0,0)" />
+    </svg> 
+</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type=text/javascript src="{{url_for('static', filename='jquery.fittext.js') }}"></script>
+<script type="text/javascript">
+    $("#welcome_name").fitText(1.4);
+</script>
+{% endblock %}

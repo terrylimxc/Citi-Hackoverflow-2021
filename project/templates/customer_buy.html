@@ -1,0 +1,45 @@
+{% extends "post_login_base.html" %}
+
+{% block content %}
+<div class="navbar" style="padding-bottom: 8px;">
+    <a href="{{ url_for('main.home') }}"><i class="fas fa-home"></i>&nbsp; Home</a> 
+    <a class="active" href="#"><i class="fas fa-store"></i>&nbsp; Buy Vouchers</a> 
+    <a href="{{ url_for('main.buyer_wallet') }}"><i class="fas fa-wallet"></i>&nbsp; My Vouchers</a> 
+    <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp; Logout</a>
+</div>
+
+<div>
+    <form method="post" action="{{ url_for('main.buy_post') }}">
+        <div class="form-group" style="padding-left: 15px;">
+            <select class="form-select" name="filter_company" style="width:153px;">
+                {% for comp in all_companies %}
+                <option value="{{comp}}">{{comp}}</option>
+                {% endfor %}
+            </select>
+            &nbsp;
+            <button type="submit" class="btn btn-primary" style="background-color: rgb(75, 99, 235);"> Filter </button>
+            <button type="button" class="btn btn-primary" style="float:right;background-color: rgb(235, 134, 75);"><a href="{{ url_for('main.checkout') }}" style="color: white;"><i class="fas fa-shopping-cart"></i>&nbsp; Checkout </a></button>
+        </div>
+    </form>
+    <form method="POST" action="/buyer/add">
+        <div class="card-group">
+            {% for voucher in all_vouchers %}
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">${{voucher.denomination}} {{voucher.company}} Voucher</div>
+                <div class="card-body">
+                    <p class="card-text">Selling Price: ${{'%0.2f'|format(voucher.price|float)}}</p>
+                    <p class="card-text">Vouchers Left: {{voucher.quantity}}</p>
+                </div>
+                <button type="submit" class="btn btn-primary" style="float:right;background-color: rgb(35, 61, 179);" name="Add Button" value="{{voucher.denomination}}+{{voucher.company}}+{{voucher.price}}"><i class="fas fa-plus"></i>&nbsp; Add to Cart </button>
+            </div>
+            {% endfor %}
+        </div>
+    </form>
+
+
+
+</div>
+
+
+
+{% endblock %}
