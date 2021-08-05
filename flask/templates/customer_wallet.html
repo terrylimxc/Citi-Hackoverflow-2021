@@ -1,6 +1,7 @@
 {% extends "post_login_base.html" %}
 
 {% block content %}
+
 <div class="navbar" style="padding-bottom: 40px;">
     <a href="{{ url_for('main.home') }}"><i class="fas fa-home"></i>&nbsp; Home</a> 
     <a href="{{ url_for('main.buy') }}"><i class="fas fa-store"></i>&nbsp; Buy Vouchers</a> 
@@ -8,42 +9,33 @@
     <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp; Logout</a>
 </div>
 
+<table class="table table-hover" style="text-align: center;font-size: 10px;">
+  <thead>
+      <tr>
+          <th scope="col">Company</th>
+          <th scope="col">Voucher</th>
+          <th scope="col">Denomination</th>
+          <th scope="col">Quantity</th>
+          <th scope="col"></th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for num, row in current_items %}
+      <tr class="table-primary" data-toggle="modal" data-id="{{num}}" data-target="#orderModal">
+          <td>{{ row.company }}</td>
+          <td>{{ row.voucher }}</td>
+          <td>${{ row.denomination }}</td>
+          <td>{{ row.quantity }}</td>
+          <td>
+            <form method="POST" action="/buyer/wallet">
+              <button type="submit" class="btn btn-primary" style="background-color: rgb(35, 61, 179);" name="Use Button" value="{{row.company}}+{{row.denomination}}"> Use </button>
+            </form>
+          </td>
+      </tr>
+      {% endfor %}
+  </tbody>
 
-
-<div class="d-grid gap-2">
-    <button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#MyModal">$10 CapitalLand Voucher<br><small>Expiry:31/09/21</small></button>
-    <button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#MyModal">$20 CapitalLand Voucher<br><small>Expiry:31/11/21</small></button>
-    
-    <!-- Modal -->
-    <div id="MyModal" class="modal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">$10 CapitalLand Voucher</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
-            </div>
-            <div class="modal-body">
-              <p>Some text in the modal..</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Use</button>
-              &nbsp;
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-    </div>    
-</div>
-
-
-
-
-  
-  
-
-
+</table>
   
   
 

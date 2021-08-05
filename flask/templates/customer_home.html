@@ -10,8 +10,8 @@
 
 <h3 id="welcome_name"><center>Welcome, {{ name }}!</center></h3>
 &nbsp;
-<h4 id="vouchers_owned" style="padding-left: 20px;padding-bottom: 10px;">Vouchers Owned: 10</h4>
-<h4 id="loyalty_points" style="padding-left: 20px;">Loyalty Points: 18000000000</h4>
+<h4 id="vouchers_owned" style="padding-left: 20px;padding-bottom: 10px;">Vouchers Owned: {{ vouchers }}</h4>
+<h4 id="loyalty_points" style="padding-left: 20px;">Loyalty Points: {{ points }}</h4>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script type=text/javascript src="{{url_for('static', filename='jquery.fittext.js') }}"></script>

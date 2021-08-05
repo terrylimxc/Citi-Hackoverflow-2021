@@ -8,19 +8,6 @@
     <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>&nbsp; Logout</a>
 </div>
 
-<script type=text/javascript>
-    $(function() {
-      $('a#test').on('click', function(e) {
-        e.preventDefault()
-        $.getJSON('/background_process_test',
-            function(data) {
-          //do nothing
-        });
-        return false;
-      });
-    });
-</script>
-
 <div>
     <form method="post" action="{{ url_for('main.buy_post') }}">
         <div class="form-group" style="padding-left: 15px;">
@@ -34,19 +21,21 @@
             <button type="button" class="btn btn-primary" style="float:right;background-color: rgb(235, 134, 75);"><a href="{{ url_for('main.checkout') }}" style="color: white;"><i class="fas fa-shopping-cart"></i>&nbsp; Checkout </a></button>
         </div>
     </form>
-
-    <div class="card-group">
-        {% for row in all_vouchers %}
-        <div class="card text-white bg-primary mb-3">
-            <div class="card-header">${{row.denomination}} {{row.company}} Voucher</div>
-            <div class="card-body">
-                <p class="card-text">Selling Price: ${{'%0.2f'|format(row.price|float)}}</p>
-                <p class="card-text">Vouchers Left: {{row.quantity}}</p>
+    <form method="POST" action="/buyer/add">
+        <div class="card-group">
+            {% for voucher in all_vouchers %}
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">${{voucher.denomination}} {{voucher.company}} Voucher</div>
+                <div class="card-body">
+                    <p class="card-text">Selling Price: ${{'%0.2f'|format(voucher.price|float)}}</p>
+                    <p class="card-text">Vouchers Left: {{voucher.quantity}}</p>
+                </div>
+                <button type="submit" class="btn btn-primary" style="float:right;background-color: rgb(35, 61, 179);" name="Add Button" value="{{voucher.denomination}}+{{voucher.company}}+{{voucher.price}}"><i class="fas fa-plus"></i>&nbsp; Add to Cart </button>
             </div>
-            <button type="button" class="btn btn-primary" style="float:right;background-color: rgb(35, 61, 179);"><a href=# id=test style="color: white;"><i class="fas fa-plus"></i>&nbsp; Add to Cart </a></button>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
+    </form>
+
 
 
 </div>
